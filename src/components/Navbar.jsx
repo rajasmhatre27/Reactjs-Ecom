@@ -1,143 +1,64 @@
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const state = useSelector(state => state.handleCart);
-    const [searchTerm, setSearchTerm] = useState("");
-    const navigate = useNavigate();
-
-    const handleSearch = () => {
-        if (searchTerm.trim()) {
-            navigate(`/search?query=${searchTerm}`);
-        }
-    };
 
     return (
-        <nav style={styles.navbar}>
-            <div style={styles.container}>
-                <NavLink to="/" style={styles.brand}>Rajas Store</NavLink>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3 sticky-top">
+            <div className="container">
+                {/* Logo */}
+                <NavLink className="navbar-brand fw-bold fs-3 text-light" to="/">
+                    <i className="fa fa-shopping-bag me-2"></i> Rajas Store
+                </NavLink>
 
-                {/* Search Bar */}
-                <div style={styles.searchContainer}>
-                    <input 
-                        type="text" 
-                        style={styles.searchInput} 
-                        placeholder="Search products..." 
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                    <button style={styles.searchButton} onClick={handleSearch}>
-                        <i className="fa fa-search"></i>
-                    </button>
-                </div>
+                {/* Toggle Button for Mobile */}
+                <button 
+                    className="navbar-toggler" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
 
                 {/* Navigation Links */}
-                <ul style={styles.navLinks}>
-                    <li><NavLink to="/" style={styles.navItem}>Home</NavLink></li>
-                    <li><NavLink to="/product" style={styles.navItem}>Products</NavLink></li>
-                    <li><NavLink to="/about" style={styles.navItem}>About</NavLink></li>
-                    <li><NavLink to="/contact" style={styles.navItem}>Contact</NavLink></li>
-                </ul>
+                <div className="collapse navbar-collapse text-center" id="navbarNav">
+                    <ul className="navbar-nav m-auto my-2">
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-light px-3" to="/">Home</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-light px-3" to="/product">Products</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-light px-3" to="/about">About</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-light px-3" to="/contact">Contact</NavLink>
+                        </li>
+                    </ul>
 
-                {/* Buttons */}
-                <div style={styles.buttons}>
-                    <NavLink to="/login" style={styles.loginButton}><i className="fa fa-sign-in-alt"></i> Login</NavLink>
-                    <NavLink to="/register" style={styles.registerButton}><i className="fa fa-user-plus"></i> Register</NavLink>
-                    <NavLink to="/cart" style={styles.cartButton}><i className="fa fa-shopping-cart"></i> Cart ({state.length})</NavLink>
+                    {/* Buttons (Responsive Alignment) */}
+                    <div className="d-flex gap-2 mt-3 mt-lg-0">
+                        <NavLink to="/login" className="btn btn-primary px-3">
+                            <i className="fa fa-sign-in-alt me-1"></i> Login
+                        </NavLink>
+                        <NavLink to="/register" className="btn btn-info px-3">
+                            <i className="fa fa-user-plus me-1"></i> Register
+                        </NavLink>
+                        <NavLink to="/cart" className="btn btn-success px-3">
+                            <i className="fa fa-shopping-cart me-1"></i> Cart ({state.length})
+                        </NavLink>
+                    </div>
                 </div>
             </div>
         </nav>
     );
-};
-
-// 🌈 Updated Styling
-const styles = {
-    navbar: {
-        backgroundColor: "#222",
-        padding: "15px 0",
-        position: "sticky",
-        top: 0,
-        zIndex: 1000,
-    },
-    container: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        maxWidth: "1200px",
-        margin: "0 auto",
-        padding: "0 20px",
-    },
-    brand: {
-        fontSize: "24px",
-        fontWeight: "bold",
-        color: "#fff",
-        textDecoration: "none",
-        transition: "0.3s",
-    },
-    searchContainer: {
-        display: "flex",
-        alignItems: "center",
-        backgroundColor: "#fff",
-        borderRadius: "25px",
-        padding: "5px 10px",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
-    },
-    searchInput: {
-        border: "none",
-        outline: "none",
-        padding: "8px",
-        borderRadius: "20px",
-        width: "200px",
-    },
-    searchButton: {
-        background: "#333",
-        color: "#fff",
-        border: "none",
-        cursor: "pointer",
-        padding: "5px 10px",
-        fontSize: "18px",
-        borderRadius: "5px",
-    },
-    navLinks: {
-        listStyle: "none",
-        display: "flex",
-        gap: "15px",
-    },
-    navItem: {
-        color: "#fff",
-        textDecoration: "none",
-        padding: "8px 12px",
-        transition: "0.3s",
-    },
-    buttons: {
-        display: "flex",
-        gap: "10px",
-    },
-    loginButton: {
-        backgroundColor: "#007BFF", // Deep Blue
-        color: "#fff",
-        textDecoration: "none",
-        padding: "8px 12px",
-        borderRadius: "5px",
-        transition: "0.3s",
-    },
-    registerButton: {
-        backgroundColor: "#007BFF", // Deep Blue
-        color: "#fff",
-        textDecoration: "none",
-        padding: "8px 12px",
-        borderRadius: "5px",
-        transition: "0.3s",
-    },
-    cartButton: {
-        backgroundColor: "#28A745", // Bright Green
-        color: "#fff",
-        textDecoration: "none",
-        padding: "8px 12px",
-        borderRadius: "5px",
-        transition: "0.3s",
-    }
 };
 
 export default Navbar;
